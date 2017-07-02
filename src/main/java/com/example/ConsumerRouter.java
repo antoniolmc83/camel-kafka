@@ -16,10 +16,14 @@ public class ConsumerRouter extends RouteBuilder {
 	@Override
 	public void configure() throws Exception {
 		
-		 from("timer:hello?period={{timer.period}}")
-//         .transform(method("myBean", "saySomething"))
-//         .to("stream:out");
-		 .to("direct:start");
+		
+		from("timer:hello?period={{timer.period}}")
+//        .transform(method("myBean", "saySomething"))
+//        .setHeader(Exchange.HTTP_METHOD, constant("GET"))
+//        .to("http://localhost:8081/testobj")
+		.process("proccesorBean")
+        .log("${body}")
+		.end();
 		 
 		from("direct:start").process(new Processor() {
             @Override
