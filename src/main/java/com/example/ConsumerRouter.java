@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Date;
+
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
@@ -7,6 +9,8 @@ import org.apache.camel.component.kafka.KafkaConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+
+import com.example.bean.LogTable;
 
 @Component
 public class ConsumerRouter extends RouteBuilder {
@@ -21,9 +25,15 @@ public class ConsumerRouter extends RouteBuilder {
 //        .transform(method("myBean", "saySomething"))
 //        .setHeader(Exchange.HTTP_METHOD, constant("GET"))
 //        .to("http://localhost:8081/testobj")
-		.process("proccesorBean")
+//		.process("proccesorBean")  // This is for parallelism
+		.process("beanProcessor")
         .log("${body}")
+//        .to("direct:mysql")
 		.end();
+		
+		
+		from("direct:mysql").process("mySqlProcessor").end();
+		
 		 
 		from("direct:start").process(new Processor() {
             @Override
