@@ -1,10 +1,14 @@
 package com.example.test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class TestMergeBeans {
 
@@ -25,8 +29,10 @@ public class TestMergeBeans {
 	public List<TestBean> createBeans(){
 		
 		List<TestBean> list = new ArrayList<>();
-		int maxCount = 1000000;
-		int maxId = 800000;
+		
+		
+		int maxCount = 100;
+		int maxId = 80;
 		int minId = 1;
 		Random r = new Random();
 		
@@ -50,12 +56,17 @@ public class TestMergeBeans {
 			bean.setAttribute("attribute " + id + " " + bean.getHistoryType());
 			bean.setAttribute1("attribute1");
 			bean.setAttribute2("attribute2");
-			list.add(bean);
+			list.add( bean);
 		}while( list.size() < maxCount );
+		
+	
+		List<TestBean> resp = list.stream().sorted( (o1, o2)-> Integer.valueOf(o1.getId()).compareTo(Integer.valueOf(o2.getId())) ).collect(Collectors.toList()); 
+		
+
 		
 		System.out.println("FinishBeans  " + list.size());
 		
-		return list;
+		return resp;
 	}
 	
 }

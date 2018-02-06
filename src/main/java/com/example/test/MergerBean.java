@@ -1,5 +1,6 @@
 package com.example.test;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +10,7 @@ public class MergerBean {
 	public static final String DELETE_STATUS = "DELETE";
 	public static final String MERGE_STATUS = "MERGE";
 	
-	public void mergeBeans(List<TestBean> listBeans) {
+	public List<TestBean> mergeBeans(List<TestBean> listBeans) {
 		 
 		
 		Map<String, TestBean> map = new HashMap<>();
@@ -32,9 +33,9 @@ public class MergerBean {
 		System.out.println("Total time: " + (System.currentTimeMillis() - initTime));
 		System.out.println("After merge: " + map.values().size());
 		//map.values().forEach(System.out::println);
+		List<TestBean> resp = new ArrayList<>(map.values()) ;
 		
-		
-		
+		return resp;
 	}
 	
 	private TestBean getAddBean(TestBean a, TestBean b) {

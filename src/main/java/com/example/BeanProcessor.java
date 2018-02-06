@@ -10,7 +10,7 @@ import org.apache.camel.ProducerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.example.bean.LogTable;
+
 
 @Component
 public class BeanProcessor implements Processor{
@@ -33,27 +33,27 @@ public class BeanProcessor implements Processor{
 		       "0","91","92","93","94","95","96","97","98","99"
 		       );
 
-		list.parallelStream().forEach(l -> {
-			LogTable item = buildLogTable(l);
-			
-			producerTemplate.sendBody("direct:mysql", item);
-				
-		});
-		
+//		list.parallelStream().forEach(l -> {
+////			LogTable item = buildLogTable(l);
+//			
+//			producerTemplate.sendBody("direct:mysql", item);
+//				
+//		});
+//		
 //		exchange.getOut().setBody(logTable);
 	
 	}
 	
 	
-	private LogTable buildLogTable(String l){
-		LogTable logTable = new LogTable();
-		String time = String.valueOf(new Date().getTime());
-		logTable.setPackageId(l + time);
-		logTable.setTransactionId(time);
-		logTable.setComponentId(l);
-		logTable.setMessageBody(new Date().toString());
-		
-		return logTable;
-	}
+//	private LogTable buildLogTable(String l){
+//		LogTable logTable = new LogTable();
+//		String time = String.valueOf(new Date().getTime());
+//		logTable.setPackageId(l + time);
+//		logTable.setTransactionId(time);
+//		logTable.setComponentId(l);
+//		logTable.setMessageBody(new Date().toString());
+//		
+//		return logTable;
+//	}
 
 }
